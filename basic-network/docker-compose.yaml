@@ -1,11 +1,11 @@
 version: '2'
 
 networks: 
-  acorn:
+  ascd:
 
 services: #컨테이너 서비스 
-  orderer.acornpub.com:
-    container_name: orderer.acornpub.com
+  orderer.ascdpub.com: #orderer
+    container_name: orderer.ascdpub.com
     image: hyperledger/fabric-orderer:1.4.3
     environment:
       - ORDERER_GENERAL_LOGLEVEL=debug #도커 로깅 레벨 
@@ -20,24 +20,24 @@ services: #컨테이너 서비스
       - 7050:7050
     volumes:
         - ./config/:/etc/hyperledger/configtx
-        - ./crypto-config/ordererOrganizations/acornpub.com/orderers/orderer.acornpub.com/:/etc/hyperledger/msp/orderer
+        - ./crypto-config/ordererOrganizations/ascdpub.com/orderers/orderer.ascdpub.com/:/etc/hyperledger/msp/orderer
     networks:
-      - acorn
-  peer0.sales1.acornpub.com: #sles1조직 
-    container_name: peer0.sales1.acornpub.com
+      - ascd
+  peer0.maluser1.ascdpub.com: #maluser1조직 
+    container_name: peer0.maluser1.ascdpub.com
     image: hyperledger/fabric-peer:1.4.3
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_PEER_ID=peer0.sales1.acornpub.com
+      - CORE_PEER_ID=peer0.maluser1.ascdpub.com
       - CORE_LOGGING_PEER=debug
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
-      - CORE_PEER_LOCALMSPID=Sales1Org
+      - CORE_PEER_LOCALMSPID=Maluser1Org
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
-      - CORE_PEER_ADDRESS=peer0.sales1.acornpub.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.sales1.acornpub.com:7051
-      - CORE_PEER_GOSSIP_ENDPOINT=peer0.sales1.acornpub.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.sales1.acornpub.com:7051
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_acorn
+      - CORE_PEER_ADDRESS=peer0.maluser1.ascdpub.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.maluser1.ascdpub.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer0.maluser1.ascdpub.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.maluser1.ascdpub.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_ascd
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
@@ -49,26 +49,26 @@ services: #컨테이너 서비스
       - 7053:7053
     volumes:
         - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/sales1.acornpub.com/peers/peer0.sales1.acornpub.com/msp:/etc/hyperledger/msp/peer
-        - ./crypto-config/peerOrganizations/sales1.acornpub.com/users:/etc/hyperledger/msp/users
+        - ./crypto-config/peerOrganizations/maluser1.ascdpub.com/peers/peer0.maluser1.ascdpub.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto-config/peerOrganizations/maluser1.ascdpub.com/users:/etc/hyperledger/msp/users
         - ./config:/etc/hyperledger/configtx
     depends_on:
-      - orderer.acornpub.com
+      - orderer.ascdpub.com
       - couchdb1
     networks:
-      - acorn
-  peer1.sales1.acornpub.com:
-    container_name: peer1.sales1.acornpub.com
+      - ascd
+  peer1.maluser1.ascdpub.com:
+    container_name: peer1.maluser1.ascdpub.com
     image: hyperledger/fabric-peer:1.4.3
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_PEER_ID=peer1.sales1.acornpub.com
+      - CORE_PEER_ID=peer1.maluser1.ascdpub.com
       - CORE_LOGGING_PEER=debug
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
-      - CORE_PEER_LOCALMSPID=Sales1Org
+      - CORE_PEER_LOCALMSPID=Maluser1Org
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
-      - CORE_PEER_ADDRESS=peer1.sales1.acornpub.com:7051
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_acorn
+      - CORE_PEER_ADDRESS=peer1.maluser1.ascdpub.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_ascd
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
@@ -80,27 +80,27 @@ services: #컨테이너 서비스
       - 8053:7053
     volumes:
         - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/sales1.acornpub.com/peers/peer1.sales1.acornpub.com/msp:/etc/hyperledger/msp/peer
-        - ./crypto-config/peerOrganizations/sales1.acornpub.com/users:/etc/hyperledger/msp/users
+        - ./crypto-config/peerOrganizations/maluser1.ascdpub.com/peers/peer1.maluser1.ascdpub.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto-config/peerOrganizations/maluser1.ascdpub.com/users:/etc/hyperledger/msp/users
         - ./config:/etc/hyperledger/configtx
     depends_on:
-      - orderer.acornpub.com
+      - orderer.ascdpub.com
       - couchdb2
     networks:
-      - acorn
+      - ascd
 
-  peer0.customer.acornpub.com:
-    container_name: peer0.customer.acornpub.com
+  peer0.maluser2.ascdpub.com:
+    container_name: peer0.maluser2.ascdpub.com
     image: hyperledger/fabric-peer:1.4.3
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_PEER_ID=peer0.customer.acornpub.com
+      - CORE_PEER_ID=peer0.maluser2.ascdpub.com
       - CORE_LOGGING_PEER=debug
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
-      - CORE_PEER_LOCALMSPID=CustomerOrg
+      - CORE_PEER_LOCALMSPID=Maluser2Org
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
-      - CORE_PEER_ADDRESS=peer0.customer.acornpub.com:7051
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_acorn
+      - CORE_PEER_ADDRESS=peer0.maluser2.ascdpub.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_ascd
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
@@ -112,27 +112,27 @@ services: #컨테이너 서비스
       - 9053:7053
     volumes:
         - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/customer.acornpub.com/peers/peer0.customer.acornpub.com/msp:/etc/hyperledger/msp/peer
-        - ./crypto-config/peerOrganizations/customer.acornpub.com/users:/etc/hyperledger/msp/users
+        - ./crypto-config/peerOrganizations/maluser2.ascdpub.com/peers/peer0.maluser2.ascdpub.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto-config/peerOrganizations/maluser2.ascdpub.com/users:/etc/hyperledger/msp/users
         - ./config:/etc/hyperledger/configtx
     depends_on:
-      - orderer.acornpub.com
+      - orderer.ascdpub.com
       - couchdb3
     networks:
-      - acorn
+      - ascd
 
-  peer1.customer.acornpub.com:
-    container_name: peer1.customer.acornpub.com
+  peer1.maluser2.ascdpub.com:
+    container_name: peer1.maluser2.ascdpub.com
     image: hyperledger/fabric-peer:1.4.3
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_PEER_ID=peer1.customer.acornpub.com
+      - CORE_PEER_ID=peer1.maluser2.ascdpub.com
       - CORE_LOGGING_PEER=debug
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
-      - CORE_PEER_LOCALMSPID=CustomerOrg
+      - CORE_PEER_LOCALMSPID=Maluser2Org
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
-      - CORE_PEER_ADDRESS=peer1.customer.acornpub.com:7051
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_acorn
+      - CORE_PEER_ADDRESS=peer1.maluser2.ascdpub.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_ascd
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
@@ -144,14 +144,14 @@ services: #컨테이너 서비스
       - 10053:7053
     volumes:
         - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/customer.acornpub.com/peers/peer1.customer.acornpub.com/msp:/etc/hyperledger/msp/peer
-        - ./crypto-config/peerOrganizations/customer.acornpub.com/users:/etc/hyperledger/msp/users
+        - ./crypto-config/peerOrganizations/maluser2.ascdpub.com/peers/peer1.maluser2.ascdpub.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto-config/peerOrganizations/maluser2.ascdpub.com/users:/etc/hyperledger/msp/users
         - ./config:/etc/hyperledger/configtx
     depends_on:
-      - orderer.acornpub.com
+      - orderer.ascdpub.com
       - couchdb4
     networks:
-      - acorn
+      - ascd
 
   cli:
     container_name: cli
@@ -162,9 +162,9 @@ services: #컨테이너 서비스
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.sales1.acornpub.com:7051
-      - CORE_PEER_LOCALMSPID=Sales1Org
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/sales1.acornpub.com/users/Admin@sales1.acornpub.com/msp
+      - CORE_PEER_ADDRESS=peer0.maluser1.ascdpub.com:7051
+      - CORE_PEER_LOCALMSPID=Maluser1Org
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/maluser1.ascdpub.com/users/Admin@maluser1.ascdpub.com/msp
       - CORE_CHAINCODE_KEEPALIVE=10
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
@@ -174,7 +174,7 @@ services: #컨테이너 서비스
         - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
         - ./config:/etc/hyperledger/configtx
     networks:
-        - acorn
+        - ascd
 
   couchdb1:
     container_name: couchdb1
@@ -185,7 +185,7 @@ services: #컨테이너 서비스
     ports:
       - 5984:5984
     networks:
-      - acorn
+      - ascd
   
   couchdb2:
     container_name: couchdb2
@@ -196,7 +196,7 @@ services: #컨테이너 서비스
     ports:
       - 6984:5984
     networks:
-      - acorn
+      - ascd
   
   couchdb3:
     container_name: couchdb3
@@ -207,7 +207,7 @@ services: #컨테이너 서비스
     ports:
       - 7984:5984
     networks:
-      - acorn
+      - ascd
   
   couchdb4:
     container_name: couchdb4
@@ -218,4 +218,4 @@ services: #컨테이너 서비스
     ports:
       - 8984:5984
     networks:
-      - acorn
+      - ascd

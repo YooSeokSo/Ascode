@@ -4,14 +4,17 @@
     "description": "Hyperledger Fabric Acorn Music Application",
     "main": "server.js",
     "dependencies": {
+        "angular": "^1.4.3",
+        "body-parser": "latest",
+        "ejs": "latest",
+        "express": "latest",
         "fabric-ca-client": "^1.4.0",
         "fabric-client": "^1.4.0",
         "fabric-network": "~1.4.0",
+        "fs": "0.0.1-security",
         "grpc": "^1.9.1",
-        "express": "latest",
-        "body-parser": "latest",
-        "ejs": "latest",
-        "angular": "^1.4.3"
+        "http": "0.0.1-security",
+        "mongoose": "^5.11.5"
     },
     "license": "Apache-2.0",
     "keywords": [

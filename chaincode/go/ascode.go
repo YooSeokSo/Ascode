@@ -23,7 +23,7 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) pb.Response 
 	} else if function == "addCode" {	//악성코드 등록cc
 		return s.addCode(APIstub, args)
 	} else if function == "addCoin" {	//평가시 코인지급cc
-		return s.addCoin(APIstub, args)	
+		return s.addCoin(APIstub, args)
 	}
 	fmt.Println("Please check your function : "+ function)
 	return shim.Error("Unknown function")
@@ -209,8 +209,8 @@ func (s *SmartContract) addCode(APIstub shim.ChaincodeStubInterface, args []stri
 	TokenA, _ = strconv.Atoi(string(wallet.Token))
 	wallet.Token = strconv.Itoa(TokenA + X)
 	wallet.WalletID = wallet.WalletID
-	updatedAAsBytes, _ := json.Marshal(wallet)
-	APIstub.PutState(A,updatedAAsBytes)
+	updatedAsBytes, _ := json.Marshal(wallet)
+	APIstub.PutState(A,updatedAsBytes)
 
 	fmt.Printf("ID:" + wallet.WalletID + ", Token: "+wallet.Token)
 	return shim.Success(nil)

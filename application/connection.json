@@ -2,7 +2,7 @@
     "name": "basic-network",
     "version": "1.0.0",
     "client": {
-        "organization": "Sales1",
+        "organization": "Maluser1",
         "connection": {
             "timeout": {
                 "peer": {
@@ -13,67 +13,67 @@
         }
     },
     "channels": {
-        "channelsales1": {
+        "channelmalware": {
             "orderers": [
-                "orderer.acornpub.com"
+                "orderer.ascdpub.com"
             ],
             "peers": {
-                "peer0.sales1.acornpub.com": {}
+                "peer0.maluser1.ascdpub.com": {}
             }
         }
     },
     "organizations": {
-        "Sales1": {
-            "mspid": "Sales1Org",
+        "Maluser1": {
+            "mspid": "Maluser1Org",
             "peers": [
-                "peer0.sales1.acornpub.com"
+                "peer0.maluser1.ascdpub.com"
             ],
             "certificateAuthorities": [
-                "ca.sales1.acornpub.com"
+                "ca.maluser1.ascdpub.com"
             ],
             "adminPrivateKey": {
-                "path":"../../basic-network/crypto-config/peerOrganizations/sales1.acornpub.com/users/Admin@sales1.acornpub.com/msp/keystore/99eba5e6ba55d207e156d88b8fe00af3aa21c958eafac92970e526f8e0f69844_sk"
+                "path":"../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/users/Admin@maluser1.ascdpub.com/msp/keystore/6efc04a91fb071672dbd008d499b3de3fa3fca9eba474e93871bc65553780f77_sk"
             },
             "signedCert":{
-                "path":"../../basic-network/crypto-config/peerOrganizations/sales1.acornpub.com/users/Admin@sales1.acornpub.com/msp/signcerts/Admin@sales1.acornpub.com-cert.pem"
+                "path":"../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/users/Admin@maluser1.ascdpub.com/msp/signcerts/Admin@maluser1.ascdpub.com-cert.pem"
             }
         }
     },
     "orderers": {
-        "orderer.acornpub.com": {
+        "orderer.ascdpub.com": {
             "url": "grpc://localhost:7050",
             "grpcOptions":{
-                "ssl-target-name-override":"orderer.acornpub.com",
+                "ssl-target-name-override":"orderer.ascdpub.com",
                 "grpc-max-send-message-length": -1
             },
             "tlsCACerts": {
-                "path": "../../basic-network/crypto-config/ordererOrganizations/acornpub.com/orderers/orderer.acornpub.com/msp/tlscacerts/tlsca.acornpub.com-cert.pem"
+                "path": "../../basic-network/crypto-config/ordererOrganizations/ascdpub.com/orderers/orderer.ascdpub.com/msp/tlscacerts/tlsca.ascdpub.com-cert.pem"
             }
         }
     },
     "peers": {
-        "peer0.sales1.acornpub.com": {
+        "peer0.maluser1.ascdpub.com": {
             "url": "grpc://localhost:7051",
             "tlsCACerts": {
-                "path": "../../basic-network/crypto-config/peerOrganizations/sales1.acornpub.com/peers/peer0.sales1.acornpub.com/msp/tlscacerts/tlsca.sales1.acornpub.com-cert.pem"
+                "path": "../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/peers/peer0.maluser1.ascdpub.com/msp/tlscacerts/tlsca.maluser1.ascdpub.com-cert.pem"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer1.sales1.acornpub.com",
-                "hostnameOverride": "peer1.sales1.acornpub.com"
+                "ssl-target-name-override": "peer1.maluser1.ascdpub.com",
+                "hostnameOverride": "peer1.maluser1.ascdpub.com"
             }
         }
     },
     "certificateAuthorities": {
-        "ca.sales1.acornpub.com": {
+        "ca.maluser1.ascdpub.com": {
             "url": "http://localhost:7054",
-            "caName": "ca.sales1.acornpub.com",
+            "caName": "ca.maluser1.ascdpub.com",
             "tlsCACerts": {
-                "path": "../../basic-network/crypto-config/peerOrganizations/sales1.acornpub.com/ca/ca.sales1.acornpub.com-cert.pem"
+                "path": "../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/ca/ca.maluser1.ascdpub.com-cert.pem"
             },
             "registrar":{
                 "enrollId": "admin",
                 "enrollSecret": "adminpw",
-                "caName": "casales1"
+                "caName": "camaluser1"
             },
             "httpOptions": {
                 "verify": false

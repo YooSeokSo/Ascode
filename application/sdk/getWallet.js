@@ -22,9 +22,9 @@ async function main() {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: 'user1', discovery: { enabled: true, asLocalhost: true } }); //user1으로 접속
 
-        const network = await gateway.getNetwork('channelsales1'); //channelsales1 채널 접속 
+        const network = await gateway.getNetwork('channelmalware'); //channelmalware 채널 접속 
 
-        const contract = network.getContract('music-cc'); //체인코드 불러옴 
+        const contract = network.getContract('ascd-cc'); //체인코드 불러옴 
 
         var walletid = process.argv[2];
 
