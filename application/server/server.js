@@ -3,23 +3,25 @@ var app = express();
 var bodyParser = require('body-parser');
 var http = require('http');
 var fs = require('fs');
-var Fabric_Client =require('fabric-client');
+var mongoose = require('mongoose');
 var path =require('path');
 var util = require('util');
-var os =require('os');
+var os = require('os');
 const { dirname } = require('path');
 
+var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var app = express();
-
 require('./controller.js')(app);
+mongoose.connect('mongodb+srv://testuser:yhw1408@cluster0.ywkaq.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
+}).then(() => console.log('MongoDB connected...'))
+.catch(error => console.log(error))
+app.use(express.static(path.join(__dirname, '../client')));
 
-app.use(express.static(path.join(_/dirname, '../client')));
+var port = process.env.PORT || 8000;
 
-var port = pocess.env.PORT || 8000;
-
-app.listen(pory,function(){
+app.listen(port,function(){
     console.log("Live in port: " + port);
 });

@@ -219,3 +219,99 @@ services: #컨테이너 서비스
       - 8984:5984
     networks:
       - ascd
+
+  zookeeper1.ascdpub.com:
+    container_name: zookeeper1.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: zookeeper
+    environment:
+      - ZOO_MY_ID=1
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+    networks:
+      - ascd
+
+  zookeeper2.ascdpub.com:
+    container_name: zookeeper2.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: zookeeper
+    environment:
+      - ZOO_MY_ID=2
+    ports:
+      - 12181:2181
+      - 12888:2888
+      - 13888:3888
+    networks:
+      - ascd
+
+  zookeeper3.ascdpub.com:
+    container_name: zookeeper3.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: zookeeper
+    environment:
+      - ZOO_MY_ID=3
+    ports:
+      - 22181:2181
+      - 22888:2888
+      - 23888:3888
+    networks:
+      - ascd
+
+  kafka1.ascdpub.com:
+    container_name: kafka1.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=1
+    ports:
+      - 9092:9092
+      - 9093:9093
+    networks:
+      - ascd
+
+  kafka2.ascdpub.com:
+    container_name: kafka2.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=2
+    ports:
+      - 10092:9092
+      - 10093:9093
+    networks:
+      - ascd
+
+  kafka3.ascdpub.com:
+    container_name: kafka3.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=3
+    ports:
+      - 11092:9092
+      - 11093:9093
+    networks:
+      - ascd
+
+  kafka4.ascdpub.com:
+    container_name: kafka4.ascdpub.com
+    extends:
+      file: ./base/kafka-base.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=4
+    ports:
+      - 12092:9092
+      - 12093:9093
+    networks:
+      - ascd
+
+  

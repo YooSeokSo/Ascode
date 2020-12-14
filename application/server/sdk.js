@@ -1,5 +1,5 @@
 'use strict';
-const {FileSystemWallet, Gateway} = requir('fabric-network');
+const {FileSystemWallet, Gateway} = require('fabric-network');
 var path = require('path');
 const ccpPath = path.resolve(__dirname, '..','connection.json');
 
@@ -7,7 +7,7 @@ async function send(type, func, args, res) {
     try{
         const walletPath = path.join(process.cwd(),'..','wallet');
         const wallet = new FileSystemWallet(walletPath);
-        console.log('Wallet Path: ${walletPath}');
+        console.log('Wallet Path: '+ walletPath);
         const userExists = await wallet.exists('user1');
         if(!userExists){
             console.log('An identity for the user "user1" does not exist in the wallet');
@@ -25,7 +25,7 @@ async function send(type, func, args, res) {
             res.send('success');
         }else{
             const result = await contract.evaluateTransaction(func, ...args);
-            console.log('Transaction has been evaluates, result is : ${result.toString()}');
+            console.log('Transaction has been evaluates, result is :' + result.toString());
             res.send(result.toString());  
         }
     } catch (error){

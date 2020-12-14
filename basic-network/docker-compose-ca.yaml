@@ -10,7 +10,7 @@ services: #컨테이너 서비스
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.maluser1.ascdpub.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.maluser1.ascdpub.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/38dab01f4395c77cdac6dcd100eeaef32719030a0747c00157ef589da5a88d3b_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/1fe42a61f3d679a06ed588a33d04a51e460409f730b07a3776cace7893bdef7c_sk
     ports:
       - "7054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'

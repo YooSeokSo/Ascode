@@ -24,10 +24,13 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) pb.Response 
 		return s.addCode(APIstub, args)
 	} else if function == "addCoin" {	//평가시 코인지급cc
 		return s.addCoin(APIstub, args)
+	} else if function == "getAllCode" {//저장된 모든 코드 조회cc
+		return s.getAllCode(APIstub)
 	}
 	fmt.Println("Please check your function : "+ function)
 	return shim.Error("Unknown function")
 }
+
 func main() {
 	err := shim.Start(new(SmartContract))
 	if err != nil {
@@ -182,9 +185,9 @@ func (s *SmartContract) addCode(APIstub shim.ChaincodeStubInterface, args []stri
 
 	var ascode = Ascode{URL: args[0], Uploader: args[1], Time: args[2], Country: args[3], Os: args[4], WalletID: args[5]}
 	codeAsJSONBytes, _ := json.Marshal(ascode) //구조체를 json으로 변환
-	//var idString = codeid.Key + keyidx
-	fmt.Println("AscodeID is "+keyidx)	//ID는 keyidx로만해서 숫자만. ex) 0 , 1 ..
-	err := APIstub.PutState(keyidx, codeAsJSONBytes)	//ascode원장에 keyidx로 정보 등록 : id(int)가 key값.
+	var idString = codekey.Key + keyidx
+	fmt.Println("AscodeID is "+idString)	//ID는 keyidx로만해서 숫자만. ex) 0 , 1 ..
+	err := APIstub.PutState(idString, codeAsJSONBytes)	//ascode원장에 keyidx로 정보 등록 : id(int)가 key값.
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Failed to record ascode catch: %s",keyidx))
 	}
@@ -214,4 +217,48 @@ func (s *SmartContract) addCode(APIstub shim.ChaincodeStubInterface, args []stri
 
 	fmt.Printf("ID:" + wallet.WalletID + ", Token: "+wallet.Token)
 	return shim.Success(nil)
+}
+
+func (s *SmartContract)  getAllCode(APIstub shim.ChaincodeStubInterface) pb.Response{
+	codekeyAsBytes, _ := APIstub.GetState("latestKey")
+	codekey := CodeKey{}
+	json.Unmarshal(codekeyAsBytes, &codekey)
+	idxStr := strconv.Itoa(codekey.Idx + 1)
+
+	var startKey = "AS0"
+	var endKey = codekey.Key + idxStr
+	fmt.Println(startKey)
+	fmt.Println(endKey)
+
+	resultsIter, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIter.Close()
+
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+	bArrayMemberAlreadyWritten := false
+	for resultsIter.HasNext() {
+		queryResponse, err := resultsIter.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]\n")
+	return shim.Success(buffer.Bytes())
 }

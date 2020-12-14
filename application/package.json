@@ -1,7 +1,7 @@
 {
-    "name": "fabric-music-go",
+    "name": "fabric-ascode-go",
     "version": "1.0.0",
-    "description": "Hyperledger Fabric Acorn Music Application",
+    "description": "Hyperledger Fabric Ascode Application",
     "main": "server.js",
     "dependencies": {
         "angular": "^1.4.3",
@@ -20,8 +20,8 @@
     "keywords": [
         "Hyperledger",
         "Fabric",
-        "Acorn",
-        "Music",
+        "Ascd",
+        "Ascode",
         "Application"
     ]
 }

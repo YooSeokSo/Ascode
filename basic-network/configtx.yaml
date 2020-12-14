@@ -23,7 +23,7 @@ Organizations:
 
 Orderer: &OrdererDefaults
 
-  OrdererType: solo
+  OrdererType: kafka
   Addresses:
     - orderer.ascdpub.com:7050
   BatchTimeout: 2s
@@ -33,7 +33,10 @@ Orderer: &OrdererDefaults
     PreferredMaxBytes: 512 KB
   Kafka:
     Brokers:
-      - 127.0.0.1:9092
+      - kafka1.ascdpub.com:9092
+      - kafka2.ascdpub.com:9092
+      - kafka3.ascdpub.com:9092
+      - kafka4.ascdpub.com:9092 
   Organizations:
 
 Application: &ApplicationDefaults
