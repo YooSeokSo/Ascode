@@ -40,23 +40,24 @@ func main() {
 
 //지갑 정보 등록 구조체
 type Wallet struct {
-	WalletID string `json:"walletid"`		//Q.WalletID량 ID랑 똑같은걸로 할까?
+	Name string `json:"name"`
+	ID string `json:"id"`		//Q.WalletID량 ID랑 똑같은걸로 할까?
 	Token string `json:"token"`
 }
 //지갑 생성
 func (s *SmartContract) setWallet(stub shim.ChaincodeStubInterface, args []string) pb.Response {	//WalletID받으면 Token 0으로 시작
 
-	if len(args) != 1 {		//WalletID,Token=0
-		return shim.Error("Incorrect number of arguments. Expecting 1")
+	if len(args) != 2 {		//WalletID,Token=0
+		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
-	A := Wallet{WalletID: args[0], Token: "0"}
+	A := Wallet{Name: args[0], ID: args[1], Token: "0"}
 	AasJSONBytes, _ := json.Marshal(A)
-	err := stub.PutState(A.WalletID, AasJSONBytes)
+	err := stub.PutState(A.ID, AasJSONBytes)
 //	fmt.Println("Your WalletID :" + A.WalletID + ", Token : 0")	출력x
 
 	if err != nil {
-		return shim.Error("Failed to create wallet " + A.WalletID)
+		return shim.Error("Failed to create wallet " + A.ID)
 	}
 	return shim.Success(nil)
 }
@@ -79,12 +80,16 @@ func (s *SmartContract) getWallet(stub shim.ChaincodeStubInterface, args []strin
 	if bArrayMemberAlreadryWritten == true {
 		buffer.WriteString(",")
 	}
-	buffer.WriteString(", ID:")
+	buffer.WriteString("{\"Name\":")
 	buffer.WriteString("\"")
-	buffer.WriteString(wallet.WalletID)
+	buffer.WriteString(wallet.Name)
+	buffer.WriteString("\"")
+	buffer.WriteString(", \"ID\":")
+	buffer.WriteString("\"")
+	buffer.WriteString(wallet.ID)
 	buffer.WriteString("\"")
 
-	buffer.WriteString(", Token:")
+	buffer.WriteString(", \"Token\":")
 	buffer.WriteString("\"")
 	buffer.WriteString(wallet.Token)
 	buffer.WriteString("\"")
@@ -123,7 +128,7 @@ func (s *SmartContract) addCoin(stub shim.ChaincodeStubInterface, args []string)
 	stub.PutState(args[0],updatedAAsBytes)
 
 
-	fmt.Printf("ID:"+walletA.WalletID+", Token: "+walletA.Token)
+	fmt.Printf("ID:"+walletA.ID+", Token: "+walletA.Token)
 	return shim.Success(nil)
 }
 
@@ -133,7 +138,7 @@ type Ascode struct{
 	Uploader string `json:"uploader"`	//글쓴이이름
 	Time string `json:"time"`			//int64?
 	//Ipfs string `json:"ipfs"`
-	Country string `json:"country`
+	Country string `json:"country"`
 	Os string `json:"os"`
 	WalletID string `json:"walletid"`
 }
@@ -211,11 +216,11 @@ func (s *SmartContract) addCode(APIstub shim.ChaincodeStubInterface, args []stri
 	json.Unmarshal(walletAsBytes, &wallet)
 	TokenA, _ = strconv.Atoi(string(wallet.Token))
 	wallet.Token = strconv.Itoa(TokenA + X)
-	wallet.WalletID = wallet.WalletID
+	wallet.ID = wallet.ID
 	updatedAsBytes, _ := json.Marshal(wallet)
 	APIstub.PutState(A,updatedAsBytes)
 
-	fmt.Printf("ID:" + wallet.WalletID + ", Token: "+wallet.Token)
+	fmt.Printf("ID:" + wallet.ID + ", Token: "+wallet.Token)
 	return shim.Success(nil)
 }
 

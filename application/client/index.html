@@ -1,124 +1,218 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hyperledger Fabric Music Application</title>
+    <title>Hyperledger Fabric Ascode Application</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    <style type="text/css">
-      header{
-        background-color: lightgray;
-        font-size:20px;
-        padding:20px;
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    
+    <style>
+      * {padding:0;margin:0;}
+      input[id="menuicon"] {display:none;}
+      /* header button */
+      header {width:100%;background:#EE4E73;}
+      header > div {position:relative;width:1200px;height:80px;margin:0 auto;}
+      /* label */
+      .area_desc {position:absolute;top:40%;left:45%;transform:translate(-50%,-50%);font-size:20px;}
+      .area_desc2 {position:absolute;top:70%;left:45%;transform:translate(-50%,-50%);font-size:13px;}
+      /*  ޴   ư */
+      .menubtn {display:block;width:50px;height:50px;position:absolute;top:50%;left:0px;transform:translateY(-50%);cursor:pointer;}
+      .menubtn span {display:block;position:absolute;width:80%;height:5px;border-radius:30px;background:#000;transition:all .35s;}
+      .menubtn span:nth-child(1) {top:20%;left:50%;transform:translateX(-50%);}
+      .menubtn span:nth-child(2) {top:50%;left:50%;transform:translate(-50%,-50%);}
+      .menubtn span:nth-child(3) {bottom:20%;left:50%;transform:translateX(-50%);}
+      /* menu button */
+      .container {width:100%;height:100%;position:relative;}
+      .container .contents {width:1200px;margin:0 auto;height:100%;border:1px solid #eee;background:#f1f1f1;}
+      .container .sidebar {position:fixed;top:0;left:-300px;width:250px;height:100%;background:#666;z-index:30;transition:.35s;}
+      /* check value */
+      input[id="menuicon"]:checked ~ header .menubtn {z-index:2;}
+      input[id="menuicon"]:checked ~ header .menubtn span {background:#fff;}
+      input[id="menuicon"]:checked ~ header .menubtn span:nth-child(1) {top:50%;left:50%;transform:translate(-50%,-50%) rotate(135deg);}
+      input[id="menuicon"]:checked ~ header .menubtn span:nth-child(2) {left:50%;transform:translate(-50%,-50%) scale(2);opacity:0;}
+      input[id="menuicon"]:checked ~ header .menubtn span:nth-child(3) {bottom:50%;left:50%;transform:translate(-50%,50%) rotate(-135deg);}
+      input[id="menuicon"]:checked ~ .container .sidebar {left:0;}
+      .menubtn {background:url('./img/btn_bg.png') 0 0 no-repeat;}
+      input[id="menuicon"]:checked ~ header .menubtn {background:url('./img/btn_bg.png') -50px 0 no-repeat;}
+
+      #sidebar_menu {
+        background-color: #A4A4A4;
+        border:3px solid white;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 30px;
+        width: 95%;
+        height: 100px;
+        position: static;
+        line-height: 90px;
+        cursor: pointer;
+}
+      th{
+        color: black;
+        background-color: #EE4E73;
       }
-      header, .form-group{
-        margin-bottom: 3%;
-      }
-      .form-group{
-        width:50%;
-      }
-      #body{
-        margin-left:3%;
-        margin-right:3%;
-      }
-      .form-control{
-        margin: 8px;
-      }
-       #right_header{
-        width:20%;
-        font-size:15px;
-        margin-right:0px;
-      }
-      #left_header{
-        margin-left:0;
-        width:40%;
-        display:inline-block;
-      } 
-      #id {
-        width:49%;
-        display: inline-block;
-      }
-      table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-      }
-      td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-      }
-      tr:nth-child(even) {
-          background-color: #dddddd;
-      }
-    </style>
+      </style>
+      
   </head>
  <body ng-app="application" ng-controller="AppCtrl">
     <header>
-      <div id="left_header">Hyperledger Fabric Acorn Music Application</div>
+      <div>
+        <div id="wrap_center" style="width:100%;"><div id="wrap_center_body" style="position:relative; width:1024px; margin:0 auto;">
+        <div id="wrap_head" style="">
+        <input type="checkbox" id="menuicon">
+        <header>
+        <div>
+        <span class="area_desc">Malware Evaluation</span>
+           <span class="area_desc2">Let's Share your Malware Code!</span>
+        <label for="menuicon" class="menubtn">
+        <span></span>
+        <span></span>
+        <span></span>
+        </label>
+        </div>
+        </header>
+        <div class="container">
+          <div class="sidebar">
+            <div style="height:10%; padding-top:5px; padding-bottom:300px;">
+              <div style="background-color: white; margin: 0 auto; text-align: center; font-size: 30px; width: 95%; height: 100px; line-height: 90px;">
+                ASCD
+              </div>
+              <div style="background-color: lightgray; margin: 0 auto; text-align: center; font-size: 10px; width: 95%;">
+                <form style="padding-top:10px; padding-bottom:10px;">
+                  <table border="1" style="margin: 0 auto;">
+                    <tr>
+                      <td style="text-align:center">ID</td>
+                      <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center">PW</td>
+                      <td><input type="text" /></td>
+                    </tr>
+                  </table>
+                  <div style="margin:0 auto; width:90%">
+                    <button type="button">로그인</button>
+                    <button routerLink="/signup">회원가입</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div id="sidebar_menu" sytle="padding-top:500px;" ng-click="showSearch()">
+              Search
+            </div>
+            <div id="sidebar_menu" ng-click="showWallet()" sytle="position:static; top:500px;">
+              Wallet
+            </div>
+            <div id="sidebar_menu" ng-click="showAdd()"  sytle="position:static; top:500px;">
+              Add Code
+            </div>
+          </div>
+        </div>
     </header>
-    <div id="body">
-      <div class="form-group">
-          <h5 style="color:green;margin-bottom:2%" id="success_getwallet">{{search_wallet}}</h5>
+    
+   
+    <div id="body" style="width:60%; margin:0 auto; text-align: left;">
+      <div class="form-group" id="success_getwallet1" style="padding-bottom:30px;">
+          
           <label>Search Wallet</label>
-          <p><input class="form-control" type="text" placeholder="Ex: 1Q2W3E4R" ng-model="walletid">
+          <h5 style="color:green;margin-bottom:2%" id="success_getwallet">{{search_wallet}}</h5>
+          <p>
+          <input class="form-control" type="text" placeholder="Ex: 1Q2W3E4R" ng-model="walletid">
           <input id="getWallet" type="submit" value="Search" class="btn btn-primary" ng-click="getWallet()"></p>
       </div>
-      <div class="form-group">
-        <h5 style="color:green;margin-bottom:2%" id="success_getmusic">Success to query</h5>
-        <label>Search Music</label>
-        <p><input class="form-control" type="text" placeholder="Ex: MS1" ng-model="musickey">
+
+      <div class="form-group" id="success_searchcode">
+        <label>Search Code</label>
+        <p><input class="form-control" type="text" placeholder="Ex: www.ascdpub.com" ng-model="url">
         <input id="getMusic" type="submit" value="Search" class="btn btn-primary" ng-click="getMusic()"></p>
-        <p><input id="getAllMusic" type="submit" value="Get all music" class="btn btn-primary" ng-click="getAllMusic()"></p>
+        <p><input id="getAllMusic" type="submit" value="Get all Code" class="btn btn-primary" ng-click="getAllMusic()"></p>
       </div>
- <table id="allMusic" class="table" align="center">
+
+      <div id="success_getcomment">
+        <table id="codeDetail" class="table" align="center">
+            <tr>
+              <th>URL</th>
+              <th>Uploader</th>
+              <th>Time</th>
+              <th>country</th>
+              <th>os</th>
+              <th>CodeId</th>
+              <th>comment</th>
+            </tr>
+            <tr ng-repeat="code in codeDetail">
+              <td>{{code.url}}</td>
+              <td>{{code.uploader}}</td>
+              <td>{{code.time}}</td>
+              <td>{{code.country}}</td>
+              <td>{{code.os}}</td>
+              <td>{{code._id}}</td>
+              <td><input id="purchaseMusic" type="submit" value="평가" ng-click="getComment(code._id)"></td>
+            </tr>
+          </table>
+        <div id ="allComment">
+        <table class="table" align="center">
+          <tr>
+            <th width: 10000px>Comment </th>
+            <th>Level</th>
+            <th>Writer</th>
+          </tr>
+          <tr ng-repeat="comment in allComment">
+            <td width: 10000px>{{comment.comment}}</td>
+            <td>{{comment.level}}</td>
+            <td>{{comment.commenter}}</td>
+          </tr>
+        </table>
+        <div class="form-group">
+          <br>
+          Comment: <input class="form-control" type="text" placeholder="" ng-model="comment.comment">
+          Level: <br><select ng-model="comment.level">
+            <option value="">위험도 선택</option>
+            <option value="안전">안전</option>
+            <option value="사소">사소</option>
+            <option value="보통">보통</option>
+            <option value="위험">위험</option>
+            <option value="심각">심각</option>
+          </select><br>
+          Writer: <input class="form-control" type="text" placeholder="Ex: name" ng-model="comment.commenter">
+          Id: <input class="form-control" type="text" value="allcomment[0]._id" ng-model="comment.id">
+          <input id="setMusic" type="submit" value="submit" class="btn btn-primary" ng-click="addComment()"> 
+        </div>
+      </div>
+    </div>
+      <div id="success_getallcode">
+       <table id="allMusic" class="table" align="center">
         <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Singer</th>
-          <th>Price</th>
-          <th>Owner</th>
-          <th>Count</th>
-          <th>Buy</th>
+          <th>URL</th>
+          <th>Uploader</th>
+          <th>Time</th>
+          <th>country</th>
+          <th>os</th>
+          <th>evaluation</th>
         </tr>
         <tr ng-repeat="music in allMusic">
-          <td>{{music.Key}}</td>
-          <td>{{music.title}}</td>
-          <td>{{music.singer}}</td>
-          <td>{{music.price}}</td>
-          <td>{{music.walletid}}</td>
-          <td>{{music.count}}</td>
-          <td><input id="purchaseMusic" type="submit" value="구매" ng-click="purchaseMusic(music.Key)"></td>
+          <td>{{music.url}}</td>
+          <td>{{music.uploader}}</td>
+          <td>{{music.time}}</td>
+          <td>{{music.country}}</td>
+          <td>{{music.os}}</td>
+          <td><input id="purchaseMusic" type="submit" value="상세정보/평가" ng-click="getDetail(music.url)"></td>
         </tr>
-        <h5 style="color:green;margin-bottom:2%" id="success_getallmusic">{{purchase_music}}</h5>
       </table>
- <div class="form-group">
-        <label>Create Music</label>
+    </div>
+      
+ <div class="form-group" id="success_create">
+        <label>Add Code</label>
         <h5 style="color:green;margin-bottom:2%" id="success_setmusic">{{create_music}}</h5>
         <br>
         Url: <input class="form-control" type="text" placeholder="Ex: Fabric" ng-model="music.title">
         Uploader: <input class="form-control" type="text" placeholder="Ex: Hyper" ng-model="music.singer">
         Time: <input class="form-control" type="text" placeholder="Ex: 20" ng-model="music.price"> 
+        Country: <input class="form-control" type="text" placeholder="Ex: 20" ng-model="music.country"> 
+        Os: <input class="form-control" type="text" placeholder="Ex: 20" ng-model="music.os"> 
         WalletID: <input class="form-control" type="text" placeholder="Ex: 5T6Y7U8I" ng-model="music.walletid">
         <input id="setMusic" type="submit" value="Create" class="btn btn-primary" ng-click="setMusic()"> 
       </div>
-      <div class="form-group">
-          <label>Change Music Price</label>
-        <h5 style="color:green;margin-bottom:2%" id="success_changemusicprice">{{change_music_price}}</h5>
-        <br>
-        Key: <input class="form-control" type="text" placeholder="Ex: MS0" ng-model="change.musickey">
-        Price<input class="form-control" type="text" placeholder="Ex: 10" ng-model="change.price">
-        <input id="changeMusicPrice" type="submit" value="Change" class="btn btn-primary" ng-click="changeMusicPrice()">
-      </div>
-      <div class="form-group">
-        <label>DeleteMusic</label>
-        <h5 style="color:green;margin-bottom:2%" id="success_deletemusic">{{delete_music}}</h5>
-        <p>
-        Key: <input class="form-control" type="text" placeholder="Ex: MS0" ng-model="musickeydelete">
-        <input id="deleteMusic" type="submit" value="Delete" class="btn btn-primary" ng-click="deleteMusic()"></p>
-      </div>
-    </div>
   </body>
   <script type="text/javascript" src="app.js"> </script>
 </html>

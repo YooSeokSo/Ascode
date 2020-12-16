@@ -4,7 +4,7 @@
     "description": "Hyperledger Fabric Ascode Application",
     "main": "server.js",
     "dependencies": {
-        "angular": "^1.4.3",
+        "angular": "^1.8.2",
         "body-parser": "latest",
         "ejs": "latest",
         "express": "latest",
@@ -14,7 +14,8 @@
         "fs": "0.0.1-security",
         "grpc": "^1.9.1",
         "http": "0.0.1-security",
-        "mongoose": "^5.11.5"
+        "mongoose": "^5.11.5",
+        "mongoose-auto-increment": "^5.0.1"
     },
     "license": "Apache-2.0",
     "keywords": [

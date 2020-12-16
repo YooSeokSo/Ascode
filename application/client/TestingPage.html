@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .productOperation{
+            position:fixed;
+            top: 50%;
+            left: 50%;
+            width:30em;
+            height:18em;
+            margin-left: -15em; /*set to a negative number 1/2 of your width*/
+            margin-top: -9em; /*set to a negative number 1/2 of your height*/
+            border: 1px solid #ccc;
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<div class="productOperation" >
+
+    <div ng-show="addProduct">
+        <h2 >Add Product enabled</h2>
+    </div>
+
+    <div ng-show="editProduct">
+        <h2>Edit Product enabled</h2>
+    </div>
+
+</div>
+
+</body>

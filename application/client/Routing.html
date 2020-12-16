@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testing</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
+    <script>
+        var app = angular.module("MyApp", ["ngRoute"]);
+
+        app.config(function($routeProvider){
+            $routeProvider
+                .when("/TestingPage", {
+                    templateUrl: "TestingPage.html"
+                });
+        });
+
+        app.controller("HomeController", function($scope, $location){
+
+            $scope.init = function(){
+                $scope.addProduct = false;
+                $scope.editProduct = false;
+            }
+
+            $scope.productOperation = function(operationType, productId){
+                $scope.addProduct = false;
+                $scope.editProduct = false;
+
+                if(operationType === "add"){
+                    $scope.addProduct = true;
+                    console.log("Add productOperation requested...");
+                }else if(operationType === "edit"){
+                    $scope.editProduct = true;
+                    console.log("Edit productOperation requested : " + productId);
+                }
+
+                //*************** VERY IMPORTANT NOTE ***************
+                //comment this $location.path("..."); line, when using <a> anchor tags,
+                //only useful when <a> below given are commented, and using <input> controls
+                $location.path("TestingPage");
+            };
+
+        });
+    </script>
+</head>
+<body ng-app="MyApp" ng-controller="HomeController">
+
+    <div ng-init="init()">
+
+        <!-- Either use <a>anchor tag or input type=button -->
+
+        <!--<a href="#!TestingPage" ng-click="productOperation('add', -1)">Add Product</a>-->
+        <!--<br><br>-->
+        <!--<a href="#!TestingPage" ng-click="productOperation('edit', 10)">Edit Product</a>-->
+
+        <input type="button" ng-click="productOperation('add', -1)" value="Add Product"/>
+        <br><br>
+        <input type="button" ng-click="productOperation('edit', 10)" value="Edit Product"/>
+        <pre>addProduct : {{addProduct}}</pre>
+        <pre>editProduct : {{editProduct}}</pre>
+        <ng-view></ng-view>
+
+    </div>
+
+</body>
+</html>
