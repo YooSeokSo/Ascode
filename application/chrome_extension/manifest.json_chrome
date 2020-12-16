@@ -1,0 +1,25 @@
+{
+    "name": "Ascode",
+    "description": "Helps you study by blocking distracting websites",
+    "version": "2.0",
+    "manifest_version": 2,
+    "permissions": [
+        "webRequestBlocking",
+        "webRequest",
+        "activeTab",
+        "tabs",
+        "<all_urls>",
+        "http://*/*",
+        "https://*/*",
+        "http://localhost:8000/"
+    ],
+    "background": {
+        "scripts": [
+            "./background.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    }
+}
