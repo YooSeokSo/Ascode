@@ -150,7 +150,7 @@
               <td><input id="purchaseMusic" type="submit" value="평가" ng-click="getComment(code._id)"></td>
             </tr>
           </table>
-        <div id ="allComment">
+        <div id ="allComments">
         <table class="table" align="center">
           <tr>
             <th width: 10000px>Comment </th>
@@ -165,7 +165,7 @@
         </table>
         <div class="form-group">
           <br>
-          Comment: <input class="form-control" type="text" placeholder="" ng-model="comment.comment">
+          Comment: <input class="form-control" type="text" placeholder="comment" ng-model="comment.comment">
           Level: <br><select ng-model="comment.level">
             <option value="">위험도 선택</option>
             <option value="안전">안전</option>
@@ -205,12 +205,12 @@
         <label>Add Code</label>
         <h5 style="color:green;margin-bottom:2%" id="success_setmusic">{{create_music}}</h5>
         <br>
-        Url: <input class="form-control" type="text" placeholder="Ex: Fabric" ng-model="music.title">
-        Uploader: <input class="form-control" type="text" placeholder="Ex: Hyper" ng-model="music.singer">
-        Time: <input class="form-control" type="text" placeholder="Ex: 20" ng-model="music.price"> 
-        Country: <input class="form-control" type="text" placeholder="Ex: 20" ng-model="music.country"> 
-        Os: <input class="form-control" type="text" placeholder="Ex: 20" ng-model="music.os"> 
-        WalletID: <input class="form-control" type="text" placeholder="Ex: 5T6Y7U8I" ng-model="music.walletid">
+        Url: <input class="form-control" type="text" placeholder="Ex: www.ascdpub.com" ng-model="music.title">
+        Uploader: <input class="form-control" type="text" placeholder="Ex: name" ng-model="music.singer">
+        Time: <input class="form-control" type="text" placeholder="Ex: 2020-12-18" ng-model="music.price"> 
+        Country: <input class="form-control" type="text" placeholder="Ex: korea" ng-model="music.country"> 
+        Os: <input class="form-control" type="text" placeholder="Ex: window10" ng-model="music.os"> 
+        WalletID: <input class="form-control" type="text" placeholder="Ex: 1Q2W3E4R" ng-model="music.walletid">
         <input id="setMusic" type="submit" value="Create" class="btn btn-primary" ng-click="setMusic()"> 
       </div>
   </body>

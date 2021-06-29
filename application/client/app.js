@@ -9,11 +9,16 @@ app.controller('AppCtrl', function($scope, appFactory){
         $("#success_create").hide();
         $("#success_getcomment").hide();
         $("#success_getdetail").hide();
+        $("#allComments").hide();
 
         $scope.showSearch = function(){
                 $("#success_getwallet1").hide();
                 $("#success_create").hide();
                 $("#success_searchcode").show();
+                $("#allComments").hide();
+                $("#success_getdetail").hide();
+                $("#success_getcomment").hide();
+                $("#success_getallcode").hide();
 
         }
         $scope.showWallet = function(){
@@ -23,6 +28,7 @@ app.controller('AppCtrl', function($scope, appFactory){
                 $("#success_create").hide();
                 $("#success_getcomment").hide();
                 $("#success_getdetail").hide();
+                $("#allComments").hide();
                        
         }
         $scope.showAdd = function(){
@@ -32,6 +38,7 @@ app.controller('AppCtrl', function($scope, appFactory){
                 $("#success_getwallet1").hide();
                 $("#success_getcomment").hide();
                 $("#success_getdetail").hide();
+                $("#allComments").hide();
         }
         $scope.getWallet = function(){
                 appFactory.getWallet($scope.walletid, function(data){
@@ -54,6 +61,7 @@ app.controller('AppCtrl', function($scope, appFactory){
                         $scope.allMusic = array;
                         $("#success_getallcode").show();
                         $("#success_getcomment").hide();
+                        $("#allComments").hide();
                 });
         }
         $scope.getMusic = function(){
@@ -88,6 +96,7 @@ app.controller('AppCtrl', function($scope, appFactory){
                         }
                         $scope.codeDetail = array;
                         $("#success_getcomment").show();
+                        $("#allComments").hide();
                 });
         }
         $scope.setMusic = function(){
@@ -113,6 +122,7 @@ app.controller('AppCtrl', function($scope, appFactory){
                         }
                         $scope.allComment = array;
                         $("#success_getcomment").show();
+                        $("#allComments").show();
                 });
         }
 });
@@ -148,8 +158,8 @@ app.controller('AppCtrl', function($scope, appFactory){
                 callback(output)
             });
         }
-        factory.changeMusicPrice = function(data, callback){
-            $http.get('/api/changeMusicPrice?musickey='+data.musickey+'&price='+data.price).success(function(output){
+        factory.addCoin = function(data, callback){
+            $http.get('/api/addCoin?='+data.musickey+'&price='+data.price).success(function(output){
                         callback(output)
                 });
         }

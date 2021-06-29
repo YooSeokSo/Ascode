@@ -26,6 +26,10 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) pb.Response 
 		return s.addCoin(APIstub, args)
 	} else if function == "getAllCode" {//저장된 모든 코드 조회cc
 		return s.getAllCode(APIstub)
+	} else if function == "addComment" {//악성코드에 코멘트 등록
+		return s.addComment(APIstub, args)
+	} else if function == "getComment" {//악성코드에 코멘트 등록
+		return s.getComment(APIstub)
 	}
 	fmt.Println("Please check your function : "+ function)
 	return shim.Error("Unknown function")
@@ -44,6 +48,8 @@ type Wallet struct {
 	ID string `json:"id"`		//Q.WalletID량 ID랑 똑같은걸로 할까?
 	Token string `json:"token"`
 }
+
+
 //지갑 생성
 func (s *SmartContract) setWallet(stub shim.ChaincodeStubInterface, args []string) pb.Response {	//WalletID받으면 Token 0으로 시작
 
@@ -149,7 +155,7 @@ type CodeKey struct {
 	Idx int	//고유번호id
 }
 
-//악성코드 등록할때마다 사용되는 고유ID를 만드는 함수 generateId
+
 func generateId(stub shim.ChaincodeStubInterface) []byte {		//[]byte: return할 형 적어줌.
 	var isFirst bool = false	//첫번째인가?
 
@@ -167,6 +173,33 @@ func generateId(stub shim.ChaincodeStubInterface) []byte {		//[]byte: return할 
 	if len(codekey.Key) == 0 || codekey.Key == "" {	//key값이 존재x 
 		isFirst = true		//첫번째 key로 간주
 		codekey.Key = "AS"	//키에 AS
+	}
+	if !isFirst {		//처음이 아니면 id+1
+		codekey.Idx = codekey.Idx + 1
+	}
+	fmt.Println("Last CommnetKey is " + codekey.Key + " : " + tempIdx)
+	returnValueBytes,_ := json.Marshal(codekey)	//codekey를 json으로 변환
+
+	return returnValueBytes		//codeKey를 json형식으로 반환
+}
+//악성코드 등록할때마다 사용되는 고유ID를 만드는 함수 generateId
+func generateCId(stub shim.ChaincodeStubInterface) []byte {		//[]byte: return할 형 적어줌.
+	var isFirst bool = false	//첫번째인가?
+
+	codekeyAsBytes, err := stub.GetState("latestCKey")	//악성코드의 마지막 키값으로 원장 조회
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	codekey := CodeKey{}	//구조체 입력
+	json.Unmarshal(codekeyAsBytes, &codekey)	//받아온 key,idx 정보인 codeidAsBytes를 구조체형식으로 변환
+	var tempIdx string
+	tempIdx = strconv.Itoa(codekey.Idx)		//정수 Idx를 문자열로 변환
+	fmt.Println(codekey)
+	fmt.Println("Key is " + strconv.Itoa(len(codekey.Key)))
+	if len(codekey.Key) == 0 || codekey.Key == "" {	//key값이 존재x 
+		isFirst = true		//첫번째 key로 간주
+		codekey.Key = "CM"	//키에 AS
 	}
 	if !isFirst {		//처음이 아니면 id+1
 		codekey.Idx = codekey.Idx + 1
@@ -231,6 +264,79 @@ func (s *SmartContract)  getAllCode(APIstub shim.ChaincodeStubInterface) pb.Resp
 	idxStr := strconv.Itoa(codekey.Idx + 1)
 
 	var startKey = "AS0"
+	var endKey = codekey.Key + idxStr
+	fmt.Println(startKey)
+	fmt.Println(endKey)
+
+	resultsIter, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIter.Close()
+
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+	bArrayMemberAlreadyWritten := false
+	for resultsIter.HasNext() {
+		queryResponse, err := resultsIter.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]\n")
+	return shim.Success(buffer.Bytes())
+}
+type Comment struct {
+	Name string `json:"name"`
+	Comment string `json:"comment"`
+	Level string `json:"level"`
+	ID string `json:"id"`
+}
+
+func (s *SmartContract)  addComment(APIstub shim.ChaincodeStubInterface, args []string) pb.Response{
+	if len(args) != 4 {	//Filehash,Uploader,Time,Ipfs,Country,Os,WalletID
+		return shim.Error("Incorrect number of arguments. Expecting 4")
+	}
+	var codekey = CodeKey{}
+	json.Unmarshal(generateCId(APIstub), &codekey)	//악성코드의 마지막 키값을 조회, Unmarshal()의 첫번째 인자:byte array형태의 데이터, 두번째 인자:디코딩된 값을 저장할 데이터 포인터
+	keyidx := strconv.Itoa(codekey.Idx)
+	fmt.Println("Key :" + codekey.Key + ", Idx : " + keyidx)
+
+	var comment = Comment{Name: args[0], Comment: args[1], Level: args[2], ID: args[3]}
+	codeAsJSONBytes, _ := json.Marshal(comment) //구조체를 json으로 변환
+	var idString = codekey.Key + keyidx
+	fmt.Println("AscodeID is "+idString)	//ID는 keyidx로만해서 숫자만. ex) 0 , 1 ..
+	err := APIstub.PutState(idString, codeAsJSONBytes)	//ascode원장에 keyidx로 정보 등록 : id(int)가 key값.
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to record ascode catch: %s",keyidx))
+	}
+	codekeyAsBytes, _ := json.Marshal(codekey)		//구조체를 json형식으로 변환해서 codekeyAsBytes에 저장
+	APIstub.PutState("latestCKey", codekeyAsBytes)	//codeis원장에 등록
+
+	return shim.Success(nil)
+}
+
+func (s *SmartContract)  getComment(APIstub shim.ChaincodeStubInterface ) pb.Response{
+	codekeyAsBytes, _ := APIstub.GetState("latestCKey")
+	codekey := CodeKey{}
+	json.Unmarshal(codekeyAsBytes, &codekey)
+	idxStr := strconv.Itoa(codekey.Idx + 1)
+
+	var startKey = "CM0"
 	var endKey = codekey.Key + idxStr
 	fmt.Println(startKey)
 	fmt.Println(endKey)

@@ -67,7 +67,7 @@ module.exports = function(app){
     });
     app.get('/api/addCoin',function(req,res){
         var walletid = req.query.walletid;
-        var coin = req.query.coin;
+        var coin = 10;
         let args = [walletid, coin];
         sdk.send(true, 'addCoin',args.res);
     });
@@ -92,6 +92,12 @@ module.exports = function(app){
             }
             res.json({result: 1});
         });
+        var name = req.query.comment;
+        var level = req.query.level;
+        var comments = req.query.commenter;
+        var id = req.query.id
+        let args =[ name, comments, level, id];
+        sdk.send(true,'addComment',args, res);
 
     });
     app.get('/api/getComment', function(req,res){

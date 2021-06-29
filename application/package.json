@@ -6,14 +6,17 @@
     "dependencies": {
         "angular": "^1.8.2",
         "body-parser": "latest",
+        "crypto": "^1.0.1",
         "ejs": "latest",
         "express": "latest",
+        "express-fileupload": "^1.2.1",
         "fabric-ca-client": "^1.4.0",
         "fabric-client": "^1.4.0",
         "fabric-network": "~1.4.0",
         "fs": "0.0.1-security",
         "grpc": "^1.9.1",
         "http": "0.0.1-security",
+        "mime": "^2.5.0",
         "mongoose": "^5.11.5",
         "mongoose-auto-increment": "^5.0.1"
     },

@@ -29,7 +29,7 @@ async function send(type, func, args, res) {
             res.send(result.toString());  
         }
     } catch (error){
-        console.error('Failed to submit transaction: ${error}');
+        //console.error('Failed to submit transaction: ${error}');
         res.send('Failed to submit transaction: ${error}');
     }
 }
