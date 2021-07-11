@@ -14,6 +14,7 @@ services: #컨테이너 서비스
       - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block #제네시스파일 위치 
       - ORDERER_GENERAL_LOCALMSPID=OrdererOrg
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
     command: orderer
     ports:
@@ -42,6 +43,7 @@ services: #컨테이너 서비스
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     ports:
@@ -73,6 +75,7 @@ services: #컨테이너 서비스
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     ports:
@@ -105,6 +108,7 @@ services: #컨테이너 서비스
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     ports:
@@ -137,6 +141,7 @@ services: #컨테이너 서비스
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     ports:

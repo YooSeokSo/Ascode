@@ -21,7 +21,7 @@ async function send(type, func, args, res) {
         if(type){
             await contract.submitTransaction(func, ...args);
             console.log('Transaction has been submitted');
-            await gateway.disconnect();
+            //await gateway.disconnect();
             res.send('success');
         }else{
             const result = await contract.evaluateTransaction(func, ...args);

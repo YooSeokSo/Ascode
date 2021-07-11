@@ -26,7 +26,7 @@ Orderer: &OrdererDefaults
   OrdererType: kafka
   Addresses:
     - orderer.ascdpub.com:7050
-  BatchTimeout: 2s
+  BatchTimeout: 0.1s
   BatchSize:
     MaxMessageCount: 10
     AbsoluteMaxBytes: 99 MB

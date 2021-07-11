@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 require('./controller.js')(app);
-var connection= mongoose.connect('mongodb+srv://testuser:yhw1408@cluster0.ywkaq.mongodb.net/test?retryWrites=true&w=majority', {
+var connection= mongoose.connect('mongodb+srv://testuser:yhw1408@cluster0.ywkaq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB connected...'))
 .catch(error => console.log(error))

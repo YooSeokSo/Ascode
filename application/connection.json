@@ -32,7 +32,7 @@
                 "ca.maluser1.ascdpub.com"
             ],
             "adminPrivateKey": {
-                "path":"../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/users/Admin@maluser1.ascdpub.com/msp/keystore/ab074f1b7957108d4a86bcaaa3adba52f38c70172a947f2c7d851f1431f722ee_sk"
+                "path":"../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/users/Admin@maluser1.ascdpub.com/msp/keystore/065b37963df3b7d04c3ac336cf662da6ad5fb5e0ecc572fee2e27542b010bb3b_sk"
             },
             "signedCert":{
                 "path":"../../basic-network/crypto-config/peerOrganizations/maluser1.ascdpub.com/users/Admin@maluser1.ascdpub.com/msp/signcerts/Admin@maluser1.ascdpub.com-cert.pem"
